@@ -3,7 +3,7 @@ export type Labels = Record<string, string>;
 const NAME_RE = /^[a-zA-Z_:][a-zA-Z0-9_:]*$/;
 const LABEL_RE = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 
-/** Format angka kanonik: tanpa pembulatan, desimal untuk 1e-5 <= |x| < 1e15, selain itu notasi ilmiah d.ddde+XX. */
+/** Canonical number format: shortest round-trip digits; decimal for 1e-5 <= |x| < 1e15, otherwise scientific d.ddde+XX. */
 export function formatNumber(x: number): string {
   if (Number.isNaN(x)) return "NaN";
   if (x === Infinity) return "+Inf";
@@ -173,7 +173,7 @@ export class Registry {
     }
     return this.add(new Histogram("histogram", name, help, Registry.labelNames(labelNames, true), [...buckets]));
   }
-  /** Teks eksposisi Prometheus 0.0.4; metrik diurutkan menurut nama (code point), tiap baris diakhiri LF. */
+  /** Prometheus text exposition 0.0.4; metrics sorted by name (code point order), every line ends with LF. */
   render(): string {
     const names = [...this.metrics.keys()].sort(cmpStr);
     const lines: string[] = [];

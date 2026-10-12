@@ -1,16 +1,16 @@
-# Panduan Pemakaian LombokMetrics
+# Usage Guide LombokMetrics
 
-## 1. Instalasi
+## 1. Installation
 
-Setelah rilis: `npm install lombokmetrics` atau `pip install lombokmetrics`. Sebelum rilis, salin folder `typescript/src` atau `python/src/lombokmetrics` (tanpa dependensi).
+After release: `npm install lombokmetrics` or `pip install lombokmetrics`. Before release, copy the `typescript/src` folder or `python/src/lombokmetrics` (no dependencies).
 
-## 2. Konsep dasar
+## 2. Basic concepts
 
-Registry menyimpan metrik. counter, gauge, dan histogram dideklarasikan dengan nama dan label; operasi memakai objek label yang tepat sama dengan deklarasi. render() menghasilkan teks Prometheus yang dapat disajikan di endpoint /metrics atau ditulis ke berkas.
+A Registry holds metrics. counter, gauge, and histogram are declared with a name and labels; operations use a label object that exactly matches the declaration. render() produces Prometheus text that can be served on a /metrics endpoint or written to a file.
 
-## 3. Contoh
+## 3. Examples
 
-Berkas `examples/example.ts` dan `examples/example.py` menghasilkan keluaran berikut (TypeScript; Python sama kecuali format cetak):
+`examples/example.ts` and `examples/example.py` produce the following output (TypeScript; Python is identical except for print formatting):
 
 ```
 # HELP http_requests_total Total requests.
@@ -27,7 +27,7 @@ request_seconds_sum 0.6699999999999999
 request_seconds_count 2
 ```
 
-Kode TypeScript:
+TypeScript code:
 
 ```ts
 import { Registry } from "lombokmetrics";
@@ -44,17 +44,17 @@ process.stdout.write(reg.render());
 
 ## 4. Recipes
 
-- Endpoint /metrics: sajikan reg.render() dengan tipe konten text/plain; version=0.0.4.
-- Berkas untuk kolektor: tulis render() ke berkas sementara lalu ganti nama secara atomik.
-- Pengujian: bandingkan render() dengan teks yang diharapkan; urutannya tetap.
+- /metrics endpoint: serve reg.render() with content type text/plain; version=0.0.4.
+- File for a collector: write render() to a temporary file and rename it atomically.
+- Testing: compare render() with the expected text; the order is stable.
 
 ## 5. Common pitfalls
 
-- Hanya format teks 0.0.4; OpenMetrics dan summary BELUM.
-- Tidak aman antar-thread; pemanggil menyerialisasi akses.
-- Tidak ada pembatas jumlah seri (kardinalitas label ditanggung pemanggil).
-- Port Rust, Go, PHP BELUM.
+- Only the 0.0.4 text format; OpenMetrics and summaries: NOT YET.
+- Not thread-safe; callers serialize access.
+- No limit on the number of series (label cardinality is the caller's responsibility).
+- Rust, Go and PHP ports: NOT YET.
 
-## 6. Lihat juga
+## 6. See also
 
 `SPEC_LombokMetrics_v0.1.0.md`, `API_LombokMetrics_v0.1.0.md`, `full_summary_project_LombokMetrics_v0.1.0.md`.

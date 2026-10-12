@@ -1,43 +1,43 @@
-# Ringkasan Proyek LombokMetrics
+# Project Summary LombokMetrics
 
-## Apa ini
+## What it is
 
 Zero-dependency metrics registry with Prometheus text exposition: counters, gauges, histograms, labels, canonical number formatting. Part of the Lombok Ecosystem.
 
-## Mengapa dibuat
+## Why it exists
 
-Semua layanan, perangkat, dan skrip yang perlu mengekspos angka operasional membutuhkan format yang sama dan keluaran yang stabil. Library ini menyimpan metrik di memori dan menghasilkan teks eksposisi dengan urutan dan format angka yang pasti, identik di setiap bahasa, sehingga mudah diuji dan dibandingkan.
+Every service, device, and script that exposes operational numbers needs the same format and stable output. This library keeps metrics in memory and renders exposition text with a fixed ordering and number format, identical in every language, so it is easy to test and compare.
 
-## Fitur utama
+## Main features
 
-- Counter, Gauge, Histogram dengan label
-- Teks eksposisi Prometheus 0.0.4 (HELP, TYPE, escape label)
-- Format angka kanonik (identik lintas bahasa)
-- Urutan keluaran deterministik (metrik menurut nama, seri menurut nilai label per code point)
-- Validasi nama metrik dan label
+- Counter, Gauge, Histogram with labels
+- Prometheus text exposition 0.0.4 (HELP, TYPE, label escaping)
+- Canonical number formatting (identical across languages)
+- Deterministic output order (metrics by name, series by label values in code point order)
+- Validation of metric and label names
 
-## Status saat ini
+## Current status
 
-Versi 0.1.0, belum dirilis. TypeScript dan Python lulus 116 kasus vector. Port lain belum ada.
+Version 0.1.0, not yet released. TypeScript and Python pass 116 vector cases. No other ports exist.
 
-## Contoh pemakai
+## Example use cases
 
-- Layanan HTTP atau worker yang menyediakan endpoint /metrics
-- Skrip batch atau cron yang menulis berkas metrik untuk dikumpulkan
-- Gateway atau perangkat tertanam yang melaporkan penghitung dan suhu
-- Pengujian: membandingkan keluaran metrik secara tepat tanpa bergantung urutan hash
+- An HTTP service or worker that serves a /metrics endpoint
+- A batch or cron script that writes a metrics file for a collector
+- A gateway or embedded device reporting counters and temperatures
+- Testing: comparing metric output exactly without depending on hash order
 
-## Batasan yang Diketahui
+## Known Limitations
 
-- Hanya format teks 0.0.4; OpenMetrics dan summary BELUM.
-- Tidak aman antar-thread; pemanggil menyerialisasi akses.
-- Tidak ada pembatas jumlah seri (kardinalitas label ditanggung pemanggil).
-- Port Rust, Go, PHP BELUM.
+- Only the 0.0.4 text format; OpenMetrics and summaries: NOT YET.
+- Not thread-safe; callers serialize access.
+- No limit on the number of series (label cardinality is the caller's responsibility).
+- Rust, Go and PHP ports: NOT YET.
 
-## Info lanjut
+## Further information
 
-SPEC: `SPEC_LombokMetrics_v0.1.0.md`; API: `API_LombokMetrics_v0.1.0.md`; panduan: `guide_how_to_use_LombokMetrics_v0.1.0.md`.
+SPEC: `SPEC_LombokMetrics_v0.1.0.md`; API: `API_LombokMetrics_v0.1.0.md`; guide: `guide_how_to_use_LombokMetrics_v0.1.0.md`.
 
-## Gap vs pembanding
+## Gap versus comparable libraries
 
-Pembanding: prometheus client (Go, Python, Node), metrics-rs. Gap jujur: tidak ada collector proses/runtime, summary, atau OpenMetrics; keunggulan: keluaran identik lintas bahasa dan jejak kecil tanpa dependensi.
+Comparable: the Prometheus client libraries (Go, Python, Node), metrics-rs. Honest gap: no process/runtime collectors, summaries, or OpenMetrics; strengths: identical output across languages and a small, dependency-free footprint.
